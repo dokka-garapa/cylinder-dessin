@@ -3,21 +3,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>円柱の「デッサン割り」ゲーム・アニメーター動画マン体験</title>
 <style>
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f4f1ea;--fg:#222;--card:#fff;--mut:#666;--ac:#2b6cb0;--bd:#d8d3c7}
-html{height:100%;height:var(--vh,100dvh);overflow:hidden;overscroll-behavior:none;scroll-padding-top:env(safe-area-inset-top,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1b1d;--fg:#eee;--card:#2a2a2e;--mut:#aaa;--ac:#7ab7ff;--bd:#444}}
-:root[data-theme="dark"]{--bg:#1b1b1d;--fg:#eee;--card:#2a2a2e;--mut:#aaa;--ac:#7ab7ff;--bd:#444}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f4f1ea;--fg:#222;--card:#fff;--mut:#666;--ac:#2b6cb0;--bd:#d8d3c7;--note:#d9480f}
+html{overflow-x:hidden;overscroll-behavior:none;scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b1b1d;--fg:#eee;--card:#2a2a2e;--mut:#aaa;--ac:#7ab7ff;--bd:#444;--note:#ffa94d}}
+:root[data-theme="dark"]{--bg:#1b1b1d;--fg:#eee;--card:#2a2a2e;--mut:#aaa;--ac:#7ab7ff;--bd:#444;--note:#ffa94d}
 *{-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 [hidden]{display:none!important}
-body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;touch-action:none;background:var(--bg);color:var(--fg);font-family:system-ui,"Hiragino Sans","Noto Sans JP","Apple SD Gothic Neo","Noto Sans KR","PingFang SC","Noto Sans SC","Noto Sans Arabic","Thonburi","Noto Sans Thai",sans-serif}
-.wrap{max-width:460px;margin:0 auto;padding:8px 12px;height:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:6px}
+body{margin:0;overflow-x:hidden;overscroll-behavior:none;touch-action:pan-y;background:var(--bg);color:var(--fg);font-family:system-ui,"Hiragino Sans","Noto Sans JP","Apple SD Gothic Neo","Noto Sans KR","PingFang SC","Noto Sans SC","Noto Sans Arabic","Thonburi","Noto Sans Thai",sans-serif}
+.wrap{max-width:460px;margin:0 auto;padding:8px 12px;height:100dvh;height:var(--vh,100dvh);box-sizing:border-box;display:flex;flex-direction:column;gap:6px}
 .top{display:flex;align-items:center;gap:8px}
 h1{flex:1;font-size:14px;margin:0;text-align:center;line-height:1.35}
 #langs{gap:4px}
-button.lg{min-width:0;min-height:30px;padding:4px 2px;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-button.lg .sn{display:none;font-size:13px;font-weight:700}
-@media (max-width:520px){button.lg .ln{display:none}button.lg .sn{display:inline}}
-button.lg.on{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:700}
+button.lg{min-width:0;min-height:32px;padding:4px 2px;font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-radius:999px}
+button.lg .ln{display:none}
+button.lg .sn{display:inline;font-size:13px;font-weight:700}
+button.lg.on{background:#f79c1d;color:#fff;border-color:#e07f00;font-weight:700}
 .btns{display:flex;gap:6px}
 button{flex:1;min-height:36px;padding:6px 4px;border:1px solid var(--bd);background:var(--card);color:var(--fg);border-radius:8px;font-size:13px;touch-action:manipulation;font-family:inherit}
 button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
@@ -50,10 +50,14 @@ canvas{width:100%;height:100%;background:#fff;border-radius:10px;touch-action:no
 .res{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:6px 10px;display:none;font-size:13px;line-height:1.4}
 .res b{font-size:22px}
 .res .msg{margin:2px 0 0}
+#bnote{font-size:13px;font-weight:700;color:var(--note);line-height:1.35;margin:0 2px;text-align:center}
+#credit{margin-top:160px;padding-bottom:64px;text-align:center;font-size:12px;color:var(--mut);line-height:1.8}
+#credit a{color:var(--ac);font-weight:700;text-decoration:none}
 .tag{display:inline-block;background:var(--ac);color:#fff;border-radius:4px;padding:0 6px;font-size:12px;margin-inline-end:6px;vertical-align:middle}
 </style></head><body><div class="wrap">
 <div class="top"><h1 data-i="title"></h1></div>
 <div class="btns" id="langs" role="group" aria-label="Language"></div>
+<div id="bnote" data-i="bnote"></div>
 <div class="btns"><button class="cs on" id="k0" data-i="c0"></button><button class="cs" id="k1" data-i="c1"></button><button class="cs" id="k2" data-i="c2"></button></div>
 <div class="msg" id="hint"></div>
 <div class="tsr" id="tsume" hidden><span id="tst"></span><div class="tbar"><i class="r"></i><i class="b"></i><i class="m" id="tsm"></i></div></div>
@@ -65,6 +69,7 @@ canvas{width:100%;height:100%;background:#fff;border-radius:10px;touch-action:no
 <div class="btns"><button id="hb"></button><button id="undo" data-i="undo"></button><button id="clr" data-i="clr"></button></div>
 <div class="btns"><button id="go" class="main" data-i="go"></button><button id="gif" data-i="gif" hidden></button><button id="nx" data-i="nx"></button></div>
 </div>
+<footer id="credit"><div>© 2026 <span id="crn">ふっふ (Fuffu)</span></div><div><span id="crl">お問い合わせ: </span><a href="https://x.com/dokka_garapa" target="_blank" rel="noopener">X @dokka_garapa</a></div></footer>
 <div id="gv" hidden><div class="gbox"><img id="gimg" alt="GIF"><div class="msg" data-i="gmsg"></div><div class="btns"><button id="gsave" class="main" data-i="gsave"></button><button id="gclose" data-i="gclose"></button></div></div></div>
 <script>
 const W=440,H=320,CX=W/2,CY=H/2,S=62,D=700;
@@ -74,7 +79,7 @@ const FONT='system-ui,"Hiragino Sans","Noto Sans JP","Apple SD Gothic Neo","Noto
 
 /* ===== 言語 ===== */
 const I={
-ja:{
+ja:{bnote:`ブラウザで開くとGIFアニメ保存できます`,cname:`ふっふ (Fuffu)`,contact:`お問い合わせ: `,
  title:`円柱の「デッサン割り」ゲーム・アニメーター動画マン体験`,name:`日本語`,short:`日`,gpt:`点`,
  c0:`初級`,c1:`中級`,c2:`上級`,
  l0:`①下書き（薄い灰色）`,l1:`②清書（黒・採点対象）`,
@@ -90,7 +95,7 @@ ja:{
  qn:`{n}問目`,hu:`・ヒント使用`,
  note:`緑が正解の円柱です（{q}）。「▶ 再生」で動きを確認、「GIF保存」で書き出し、「次の出題」で続けます。`
 },
-en:{
+en:{bnote:`Open in a browser to save the GIF animation`,cname:`Fuffu`,contact:`Contact: `,
  title:`Cylinder "Dessin-wari" Game – Try Being an Animation Inbetweener`,name:`English`,short:`EN`,gpt:` pts`,
  c0:`Beginner`,c1:`Intermediate`,c2:`Advanced`,
  l0:`① Rough (light gray)`,l1:`② Clean-up (black, scored)`,
@@ -106,7 +111,7 @@ en:{
  qn:`Q{n}`,hu:`, hint used`,
  note:`Green is the correct cylinder ({q}). Press "▶ Play" to check the motion, "Save GIF" to export it, or "Next" to continue.`
 },
-ko:{
+ko:{bnote:`브라우저에서 열면 GIF 애니메이션을 저장할 수 있습니다`,cname:`Fuffu`,contact:`문의: `,
  name:`한국어`,short:`한`,gpt:`점`,
  title:`원기둥 「데생 나누기」 게임 · 동화맨(인비트위너) 체험`,
  c0:`초급`,c1:`중급`,c2:`상급`,
@@ -123,7 +128,7 @@ ko:{
  qn:`{n}번째 문제`,hu:`・힌트 사용`,
  note:`초록색이 정답 원기둥입니다({q}). '▶ 재생'으로 움직임을 확인하고, 'GIF 저장'으로 내보내고, '다음 문제'로 계속하세요.`
 },
-zh:{
+zh:{bnote:`在浏览器中打开即可保存GIF动画`,cname:`Fuffu`,contact:`联系方式：`,
  name:`中文`,short:`中`,gpt:`分`,
  title:`圆柱“素描中割”游戏·体验补间动画师`,
  c0:`初级`,c1:`中级`,c2:`高级`,
@@ -140,7 +145,7 @@ zh:{
  qn:`第{n}题`,hu:`・使用了提示`,
  note:`绿色是正确的圆柱（{q}）。点击“▶ 播放”确认动作，点击“保存GIF”导出，点击“下一题”继续。`
 },
-fr:{
+fr:{bnote:`Ouvrez dans un navigateur pour enregistrer l’animation GIF`,cname:`Fuffu`,contact:`Contact : `,
  name:`Français`,short:`FR`,gpt:` pts`,
  title:`Cylindre « Dessin-wari » – Essayez le métier d’intervalliste`,
  c0:`Débutant`,c1:`Intermédiaire`,c2:`Avancé`,
@@ -157,7 +162,7 @@ fr:{
  qn:`Q{n}`,hu:`, indice utilisé`,
  note:`Le vert est le cylindre correct ({q}). Appuyez sur « ▶ Lecture » pour vérifier le mouvement, sur « Enregistrer le GIF » pour l’exporter, ou sur « Suivant » pour continuer.`
 },
-es:{
+es:{bnote:`Ábrelo en un navegador para guardar la animación GIF`,cname:`Fuffu`,contact:`Contacto: `,
  name:`Español`,short:`ES`,gpt:` pts`,
  title:`Cilindro «Dessin-wari» – Prueba a ser intercalador de animación`,
  c0:`Principiante`,c1:`Intermedio`,c2:`Avanzado`,
@@ -174,7 +179,7 @@ es:{
  qn:`P{n}`,hu:`, pista usada`,
  note:`El verde es el cilindro correcto ({q}). Pulsa «▶ Reproducir» para ver el movimiento, «Guardar GIF» para exportarlo o «Siguiente» para continuar.`
 },
-ar:{
+ar:{bnote:`افتحه في المتصفح لحفظ رسوم GIF المتحركة`,cname:`Fuffu`,contact:`للتواصل: `,
  name:`العربية`,short:`ع`,gpt:` نقطة`,rtl:1,
  title:`لعبة الأسطوانة «Dessin-wari» – جرّب أن تكون رسّام الإطارات الوسيطة`,
  c0:`مبتدئ`,c1:`متوسط`,c2:`متقدم`,
@@ -191,7 +196,7 @@ ar:{
  qn:`السؤال {n}`,hu:`، مع تلميح`,
  note:`اللون الأخضر هو الأسطوانة الصحيحة ({q}). اضغط «▶ تشغيل» لمراجعة الحركة، و«حفظ GIF» لتصديره، و«التالي» للمتابعة.`
 },
-th:{
+th:{bnote:`เปิดในเบราว์เซอร์เพื่อบันทึกภาพเคลื่อนไหว GIF ได้`,cname:`Fuffu`,contact:`ติดต่อ: `,
  name:`ภาษาไทย`,short:`ไทย`,gpt:` คะแนน`,
  title:`เกมทรงกระบอก "Dessin-wari" – ลองเป็นนักวาดภาพแทรก`,
  c0:`ง่าย`,c1:`ปานกลาง`,c2:`ยาก`,
@@ -350,9 +355,11 @@ function endStroke(){if(!drawing)return;drawing=false;pid=null;ptype='';const L=
 
 /* ===== 描画スペース以外は何も反応させない（スクロール・拡大・選択・長押しメニューなど） ===== */
 const onGif=e=>e.target.closest&&e.target.closest('#gimg,#c');
-document.addEventListener('touchstart',e=>{if(!onGif(e))e.preventDefault()},{passive:false});
-document.addEventListener('touchmove',e=>{if(!onGif(e))e.preventDefault()},{passive:false});
-['gesturestart','gesturechange','gestureend','contextmenu','dragstart','selectstart'].forEach(t=>document.addEventListener(t,e=>{if(!onGif(e))e.preventDefault()}));
+const onCredit=e=>e.target.closest&&e.target.closest('#credit');
+const onBlock=e=>{const tg=e.target;return tg&&(tg.tagName==='CANVAS'||tg.tagName==='BUTTON')};
+document.addEventListener('touchstart',e=>{if(onGif(e)||onCredit(e))return;if(onBlock(e))e.preventDefault()},{passive:false});
+document.addEventListener('touchmove',e=>{if(onGif(e))return;if(onBlock(e))e.preventDefault()},{passive:false});
+['gesturestart','gesturechange','gestureend','contextmenu','dragstart','selectstart'].forEach(t=>document.addEventListener(t,e=>{if(!onGif(e)&&!onCredit(e))e.preventDefault()}));
 
 /* ===== ボタン：指でもペン先でもマウスでも反応（離した位置がボタン付近なら実行） ===== */
 function bind(el,fn){let id=null;
@@ -389,8 +396,9 @@ function hmLabel(){$('hm').textContent=T(hideMine?'hmOn':'hm');$('hm').classList
 function hbLabel(){$('hb').textContent=T(hint?'hbOff':'hb')}
 function apply(){document.documentElement.lang=lang;document.title=T('title');
  document.documentElement.dir='ltr';
- const rtl=I[lang].rtl?'rtl':'ltr';document.querySelectorAll('h1,.msg,#res,#tst').forEach(el=>el.dir=rtl);
+ const rtl=I[lang].rtl?'rtl':'ltr';document.querySelectorAll('h1,.msg,#res,#tst,#bnote,#credit').forEach(el=>el.dir=rtl);
  document.querySelectorAll('[data-i]').forEach(el=>el.textContent=T(el.dataset.i));
+ $('crn').textContent=T('cname');$('crl').textContent=T('contact');
  document.querySelectorAll('#langs button').forEach(b=>{const on=b.dataset.l===lang;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});hbLabel();alLabel();hmLabel();syncBtns();hintMsg();tsumeUI();renderRes();if(q)draw()}
 function setLang(l){lang=l;try{localStorage.setItem('dw-lang',l)}catch(_){}apply()}
 function setLayer(l){layer=l;$('l0').classList.toggle('on',!l);$('l1').classList.toggle('on',!!l)}
